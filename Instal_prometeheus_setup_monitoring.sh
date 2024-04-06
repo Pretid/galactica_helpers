@@ -73,7 +73,7 @@ sudo systemctl start prometheus.service
 sudo journalctl -u prometheus.service -f --output cat
 
 # Display Prometheus metrics endpoint
-curl -u admin http://localhost:9090/metrics
+curl http://localhost:9090/metrics
 
 # Allow traffic on port 9090
 sudo ufw allow 9090/tcp
