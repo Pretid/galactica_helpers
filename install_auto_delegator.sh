@@ -40,7 +40,7 @@ chmod +x "$file_path"
 
 echo "Script file created with success"
 
-cron_job="0 * * * * $HOME/auto-withdraw-redelegue.sh"
+cron_job="0 * * * * $HOME/auto-withdraw-redelegue.sh >> $HOME/auto-withdraw-redelegue.log 2>&1"
 
 # Add cron task
 (crontab -l ; echo "$cron_job") | crontab -
