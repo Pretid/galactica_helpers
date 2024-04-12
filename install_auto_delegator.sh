@@ -22,7 +22,6 @@ sleep 5
 
 echo 'On met le solde en variable'
 export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk '/amount/{print substr($3, 2, length($3)-2)}')
-echo 'Amount is $AMOUNT'
 
 echo 'On redelegue'
 {
