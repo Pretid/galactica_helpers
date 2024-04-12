@@ -6,7 +6,7 @@ echo
 
 # save Passphrase in .bashrc
 echo "export PASSPHRASE=\"$PASSPHRASE\"" >> "$HOME/.bashrc"
-source "$HOME/.bashrc"
+source $HOME/.bashrc
 
 # Contenu du script à créer
 script_content='#!/bin/bash
