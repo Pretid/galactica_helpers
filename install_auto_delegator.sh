@@ -46,3 +46,11 @@ cron_job="0 * * * * $HOME/auto-withdraw-redelegue.sh >> $HOME/auto-withdraw-rede
 (crontab -l ; echo "$cron_job") | crontab -
 
 echo "Cron task create and will be executed every hour"
+
+if [ -f "install_auto_delegator.sh" ]; then
+    echo "File install_auto_delegator.sh exists. Removing it..."
+    rm install_auto_delegator.sh
+    echo "File install_auto_delegator.sh removed successfully."
+else
+    echo "File install_auto_delegator.sh does not exist."
+fi
