@@ -26,7 +26,6 @@ export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk "/amount/{p
 echo "Delegate"
 {
 echo "$PASSPHRASE"
-echo "$PASSPHRASE"
 } |
 galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id galactica_9302-1 --gas 200000 --gas-prices 10agnet -y'
 
