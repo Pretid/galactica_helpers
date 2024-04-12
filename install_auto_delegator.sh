@@ -19,8 +19,7 @@ echo "On withdraw"
 echo "$PASSPHRASE"
 echo "$PASSPHRASE"
 } |
-galacticad tx distribution withdraw-all-rewards --from $WALLET --chain-id galactica_9302-1 --gas 200000 --gas-prices 10agnet -y
-
+galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id galactica_9302-1 --gas 200000 --gas-prices 10agnet -y
 sleep 5
 
 
