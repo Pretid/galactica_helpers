@@ -13,6 +13,7 @@ script_content='#!/bin/bash
 
 cd $HOME
 source ~/.bashrc
+source ~/.bash_profile
 
 echo "On withdraw"
 {
