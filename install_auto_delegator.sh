@@ -11,6 +11,9 @@ source $HOME/.bashrc
 # Contenu du script à créer
 script_content='#!/bin/bash
 
+cd $HOME
+source ~/.bashrc
+
 echo "On withdraw"
 {
 echo "$PASSPHRASE"
