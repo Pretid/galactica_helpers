@@ -11,7 +11,7 @@ source "$HOME/.bashrc"
 # Contenu du script à créer
 script_content='#!/bin/bash
 
-echo 'On withdraw'
+echo "On withdraw"
 {
 echo "$PASSPHRASE"
 echo "$PASSPHRASE"
@@ -20,10 +20,10 @@ galacticad tx distribution withdraw-all-rewards --from $WALLET --chain-id galact
 
 sleep 5
 
-echo 'Save amount in var'
+
 export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk "/amount/{print substr($3, 2, length($3)-2)}")
 
-echo 'Delegate'
+echo "Delegate"
 {
 echo "$PASSPHRASE"
 echo "$PASSPHRASE"
