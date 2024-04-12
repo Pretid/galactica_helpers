@@ -21,7 +21,7 @@ galacticad tx distribution withdraw-all-rewards --from $WALLET --chain-id galact
 sleep 5
 
 echo 'Save amount in var'
-export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk '/amount/{print substr($3, 2, length($3)-2)}')
+export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk "/amount/{print substr($3, 2, length($3)-2)}")
 
 echo 'Delegate'
 {
