@@ -21,10 +21,11 @@ galacticad tx distribution withdraw-all-rewards --from $WALLET --chain-id galact
 sleep 5
 
 
-export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk "/amount/{print substr($3, 2, length($3)-2)}")
+export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk '\''/amount/{print substr($3, 2, length($3)-2)}'\'')
 
 echo "Delegate"
 {
+echo "$PASSPHRASE"
 echo "$PASSPHRASE"
 } |
 galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id galactica_9302-1 --gas 200000 --gas-prices 10agnet -y'
