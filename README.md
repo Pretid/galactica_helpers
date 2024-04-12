@@ -15,6 +15,6 @@ Please proceed with caution and ensure that you understand the implications of s
 Use the following command
 ```
 wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/install_auto_delegator.sh"
-chdmod +x install_auto_delegator.sh
+chmod +x install_auto_delegator.sh
 ./install_auto_delegator.sh
 ```
