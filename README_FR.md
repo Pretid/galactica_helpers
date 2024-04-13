@@ -1,4 +1,4 @@
-[:uk: EN](./README.md) [:fr: FR](./README_FR.md)
+[:uk:EN](./README.md) [:fr:FR](./README_FR.md)
 # Galactica helpers
 >⚠️ **Dépot Communautaire**: Veuillez noter que les scripts de ce dépot sont fournis par des membres de la communauté Galactica et ne sont pas officiellement approuvés ou pris en charge par l'équipe de développement de Galactica. Des efforts ont été pris pour garantir la qualité et la sécurité des scripts, mais, les utilisateurs doivent faire preuve de prudence et examiner le code avant de l'exécuter dans leurs validateurs de nœuds.
 

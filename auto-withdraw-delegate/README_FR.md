@@ -1,4 +1,4 @@
-[:uk: EN](./README.md) [:fr: FR](./README_FR.md)
+[:uk:EN](./README.md) [:fr:FR](./README_FR.md)
 # Commission and Reward Auto-Withdraw and Delegate Script
 Special thanks to Niko for the main script ! 
 
