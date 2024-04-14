@@ -16,7 +16,8 @@ Please proceed with caution and ensure that you understand the implications of s
 
 
 ## Installation
-Use the following command
+Use the following command:
+
 ```bash
 # Download script
 wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-withdraw-delegate/install_auto_delegator.sh"
