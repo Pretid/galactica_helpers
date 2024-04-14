@@ -1,30 +1,33 @@
 [:uk:EN](./README.md) [:fr:FR](./README_FR.md)
 # Commission and Reward Auto-Withdraw and Delegate Script
-Special thanks to Niko for the main script ! 
+Merci à ces members pour leur contribution à ce script:
+- Niko
+-
+-
+-
 
-This script automates the process of withdrawing commission and rewards from a node validator and self-delegating them back to the node. It simplifies the management of your node's earnings, ensuring that you maximize your rewards without manual intervention.
+Ce script automatise le processus du retrait des commissions et des récompenses d'un nœud validateur et puis de leur auto-délégation au nœud.
+Il simplifie la gestion des revenus de votre nœud, garantissant que vous maximisez vos récompenses sans intervention manuelle.
 
 --- 
->:warning: **This script stores your passphrase in clear text**: Be very careful here. </br>
+>:warning: **Ce script stocke votre `PASSPHRASE` en texte non encrypté**: Soyez prudent! </br>
 
+Ce script nécessite que l'utilisateur entre sa `PASSPHRASE`, qui est ensuite stockée en texte non encrypté dans le fichier `.bashrc`. Le stockage de passphrase ou de mots de passe en texte non encrypté présente un risque de sécurité, car des utilisateurs non autorisés qui accèdent à votre système pourraient y accéder.
 
-This script requires the user to input their passphrase, which is then stored in clear text in the `.bashrc` file. Storing passwords or passphrases in clear text poses a security risk as it could be accessed by unauthorized users who gain access to your system.
+Il est recommandé d'éviter de stocker des informations sensibles telles que des mots de passe en texte clair. Pensez à utiliser des méthodes sécurisées telles que des variables d'environnement, des gestionnaires de mots de passe ou des techniques de chiffrement pour gérer les données sensibles en toute sécurité.
 
-It's recommended to avoid storing sensitive information such as passwords in clear text. Consider using secure methods such as environment variables, password managers, or encryption techniques to handle sensitive data securely.
-
-Please proceed with caution and ensure that you understand the implications of storing passwords in clear text before using this script.
-
+Veuillez procéder avec prudence et assurez-vous de bien comprendre les implications du stockage des mots de passe en texte clair avant d'utiliser ce script.
 
 ## Installation
-Use the following command
+Utilisez la commande suivante
 ```bash
-# Download script
+# Télécharge le script
 wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-withdraw-delegate/install_auto_delegator.sh"
 
-# Add execute permissions
+# Ajout des autorisations d'éxécution
 chmod +x install_auto_delegator.sh
 
-# Execute installation
+# Exécute l'installation
 ./install_auto_delegator.sh
 ```
 ## Telegram notifications and alerts
