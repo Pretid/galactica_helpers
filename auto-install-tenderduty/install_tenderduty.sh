@@ -30,10 +30,10 @@ fi
 # Make a backup of the original file
 cp $HOME/tenderduty/config.yml $HOME/tenderduty/config.yml.bak
 
-sed -i.bak 's|Osmosis|Galactica|g' $HOME/tenderduty/config-script-tester.yml
-sed -i.bak 's|osmosis-1|galactica_9302-1|g' $HOME/tenderduty/config-script-tester.yml
-sed -i.bak "s|tcp://localhost:26657|tcp://localhost:${GALACTICA_PORT}657|g" $HOME/tenderduty/config-script-tester.yml
-sed -i.bak "s|osmovaloper1xxxxxxx...|$VALOPER_ADDRESS|g" $HOME/tenderduty/config-script-tester.yml
+sed -i.bak 's|Osmosis|Galactica|g' $HOME/tenderduty/config.yml
+sed -i.bak 's|osmosis-1|galactica_9302-1|g' $HOME/tenderduty/config.yml
+sed -i.bak "s|tcp://localhost:26657|tcp://localhost:${GALACTICA_PORT}657|g" $HOME/tenderduty/config.yml
+sed -i.bak "s|osmovaloper1xxxxxxx...|$VALOPER_ADDRESS|g" $HOME/tenderduty/config.yml
 
 
 # Set tenderduty as a service
@@ -79,5 +79,5 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming 
 sudo ufw allow ssh/tcp 
 sudo ufw limit ssh/tcp 
-sudo ufw allow 26656,26660,8888/tcp
+sudo ufw allow ${GALACTICA_PORT}656,26660,8888/tcp
 sudo ufw enable
