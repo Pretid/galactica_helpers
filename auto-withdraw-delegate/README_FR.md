@@ -1,7 +1,7 @@
 [:uk:EN](./README.md) [:fr:FR](./README_FR.md)
 # Commission and Reward Auto-Withdraw and Delegate Script
 Merci à ces membres pour leur contribution à ce script:
-- Niko
+- [Niko](https://twitter.com/LNicoooo)
 -
 -
 -
