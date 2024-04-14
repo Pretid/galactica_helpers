@@ -14,12 +14,12 @@ Il simplifie la gestion des revenus de votre nœud, garantissant que vous maximi
 
 Ce script nécessite que l'utilisateur entre sa `PASSPHRASE`, qui est ensuite stockée en texte non encrypté dans le fichier `.bashrc`. Le stockage de passphrase ou de mots de passe en texte non encrypté présente un risque de sécurité, car des utilisateurs non autorisés qui accèdent à votre système pourraient y accéder.
 
-Il est recommandé d'éviter de stocker des informations sensibles telles que des mots de passe en texte clair. Pensez à utiliser des méthodes sécurisées telles que des variables d'environnement, des gestionnaires de mots de passe ou des techniques de chiffrement pour gérer les données sensibles en toute sécurité.
+Il est recommandé d'éviter de stocker des informations sensibles telles que des mots de passe et les `PASSPHRASE`s en texte non encrypté. Pensez à utiliser des méthodes sécurisées telles que des variables d'environnement, des gestionnaires de mots de passe ou des techniques d'encryption pour gérer les données sensibles en toute sécurité.
 
-Veuillez procéder avec prudence et assurez-vous de bien comprendre les implications du stockage des mots de passe en texte clair avant d'utiliser ce script.
+Veuillez procéder avec prudence et assurez-vous de bien comprendre les implications du stockage des mots de passe en texte non encrypté avant d'utiliser ce script.
 
 ## Installation
-Utilisez la commande suivante
+Utilisez la commande suivante:
 ```bash
 # Télécharge le script
 wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-withdraw-delegate/install_auto_delegator.sh"
@@ -32,7 +32,7 @@ chmod +x install_auto_delegator.sh
 ```
 ## Telegram notifications and alerts
 
-This section is in a **Work-In-Progress**.
+Cette section est un travail en cours.
 
 If you want to get telegram notification you can use the following code. 
 
