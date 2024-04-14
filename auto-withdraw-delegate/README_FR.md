@@ -1,6 +1,6 @@
 [:uk:EN](./README.md) [:fr:FR](./README_FR.md)
 # Commission and Reward Auto-Withdraw and Delegate Script
-Merci à ces members pour leur contribution à ce script:
+Merci à ces membres pour leur contribution à ce script:
 - Niko
 -
 -
@@ -20,6 +20,7 @@ Veuillez procéder avec prudence et assurez-vous de bien comprendre les implicat
 
 ## Installation
 Utilisez la commande suivante:
+
 ```bash
 # Télécharge le script
 wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-withdraw-delegate/install_auto_delegator.sh"
