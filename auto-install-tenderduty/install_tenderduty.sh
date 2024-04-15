@@ -72,12 +72,4 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable tenderdutyd
 sudo systemctl start tenderdutyd
-
-# Firewall Setup
-sudo apt install ufw 
-sudo ufw default allow outgoing 
-sudo ufw default deny incoming 
-sudo ufw allow ssh/tcp 
-sudo ufw limit ssh/tcp 
-sudo ufw allow ${GALACTICA_PORT}656,26660,8888/tcp
-sudo ufw enable
+sudo systemctl restart tenderdutyd
