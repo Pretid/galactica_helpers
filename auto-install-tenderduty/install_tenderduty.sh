@@ -90,3 +90,4 @@ sudo systemctl restart tenderdutyd
 
 echo "Tenderduty installation complete..."
 echo "Your Tenderduty instance is running on $(hostname -I | awk '{print $1}'):8888"
+echo "If the instance is not accessible, please check your firewall rules, check the README for the ports"
