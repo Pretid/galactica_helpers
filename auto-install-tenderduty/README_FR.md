@@ -4,10 +4,14 @@
 Contributeurs :
 - [Taro](https://github.com/bobataro)
 
-Ce script automatise le processus d'installation de [Tenderduty](https://github.com/blockpane/tenderduty) sur votre Galactica Node Validator, il préconfigurera automatiquement Tenderduty pour surveiller votre instance Galatica Node ainsi que saisir les informations de la chaîne.
+> :warning: Il n'est pas recommandé d'installer tout votre monitoring sur la même instance que votre validateur de nœud, car cela introduit un point de défaillance unique. Si l'instance tombe en panne ou rencontre des problèmes, votre validateur de nœud et vos services de surveillance pourraient être affectés simultanément, entraînant des temps d'arrêt potentiels et des risques opérationnels. Il est recommandé de répartir votre infrastructure de surveillance sur des instances ou des environnements distincts pour garantir la redondance et améliorer la fiabilité globale du système.
 
-En cours :
-- Notifications Discord/Télégramme/Slack
+
+Ce script automatise le processus d'installation de [Tenderduty](https://github.com/blockpane/tenderduty) sur votre Galactica Node Validator, il préconfigurera automatiquement Tenderduty pour surveiller votre instance local du Galactica Node ainsi que saisir les informations de la chaîne.
+
+## En cours :
+- Configuration des notifications Discord/Telegram/Slack
+- Utilisation de Tenderduty sur une machine/instance séparée
 - Configuration automatique du pare-feu
 
 ## Installation
@@ -23,6 +27,9 @@ chmod +x install_tenderduty.sh
 # Exécution de l'installation
 ./install_tenderduty.sh
 ```
+## Conditions préalables:
+- Nœud Galactica installé
+- Allez installé
 
 ## Configuration du pare-feu
 Cette configuration de pare-feu par défaut exposera:
@@ -31,6 +38,8 @@ Cette configuration de pare-feu par défaut exposera:
 - Votre node Galactica.
 
 > :warning: Si `ufw` est déjà installé, veuillez exécuter uniquement ces commandes pour ajouter de nouvelles règles :
+
+> The default 2 digits of the GALACTICA_PORT is `26` (full port: `26656`) 
 
 ```bash
 sudo ufw allow ${GALACTICA_PORT}656,28686,8888/tcp

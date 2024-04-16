@@ -4,11 +4,20 @@
 Contributors:
 - [Taro](https://github.com/bobataro)
 
-This script automates the process of installing [Tenderduty](https://github.com/blockpane/tenderduty) onto your Galactica Node Validator, it will automatically pre-configure Tenderduty to monitor your Galatica Node instance as well as input the Chain information.
+> :warning: It is not recommended to install all of your monitoring stack onto the same instance as your node validator, as it introduces a single point of failure. If the instance goes down or experiences issues, both your node validator and monitoring services could be affected simultaneously, leading to potential downtime and operational risks. It's best practice to distribute your monitoring infrastructure across separate instances or environments to ensure redundancy and improve overall system reliability.
 
-Work in Progress:
-- Discord/Telegram/Slack notifications
+This script automates the process of installing [Tenderduty](https://github.com/blockpane/tenderduty) onto your Galactica Node Validator, it will automatically pre-configure Tenderduty to monitor your local Galatica Node instance as well as input the Chain information.
+
+## Work in Progress:
+- Configuring Discord/Telegram/Slack notifications
+- Using Tenderduty on a separate machine
 - Automatic Firewall Setup
+
+## Pre-requisites:
+- Galactica Node installed
+- Golang installed
+
+
 
 ## Installation
 Use the following command:
