@@ -26,6 +26,7 @@ This script automates the process of installing [Tenderduty](https://github.com/
 ![Tenderduty Dashboard](./images/Tenderduty%20Dashboard.png)
 
 ## Work in Progress:
+- Guide to Configuring Tenderduty more in-depth 
 - Configuring Discord/Telegram/Slack notifications
 - Using Tenderduty on a separate machine
 - Automatic Firewall Setup
@@ -53,12 +54,20 @@ chmod +x install_tenderduty.sh
 ## Firewall Setup
 This default firewall setup will expose Tenderduty (port 8888), Prometheus Exporter (28686) and your Galactica Server.
 
+### UFW already installed
+
+> The default starting 2 digits of the `GALACTICA_PORT` is `26` (full port: `26656`) 
+
 If you already have `ufw` installed, please only run these commands to add new rules:
 
 ```bash
 sudo ufw allow ${GALACTICA_PORT}656,28686,8888/tcp
 sudo ufw reload
 ```
+
+### New Installation (UFW not installed)
+
+> The default starting 2 digits of the `GALACTICA_PORT` is `26` (full port: `26656`) 
 
 Installation of `ufw` and new rules
 ```bash

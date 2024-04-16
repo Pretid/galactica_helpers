@@ -26,7 +26,8 @@ Ce script automatise le processus d'installation de [Tenderduty](https://github.
 ![Tenderduty Dashboard](./images/Tenderduty%20Dashboard.png)
 
 
-## En cours :
+## Travail En cours :
+- Guide de configuration de Tenderduty plus approfondi
 - Configuration des notifications Discord/Telegram/Slack
 - Utilisation de Tenderduty sur une machine/instance séparée
 - Configuration automatique du pare-feu
@@ -46,7 +47,7 @@ chmod +x install_tenderduty.sh
 ```
 ## Conditions préalables:
 - Nœud Galactica installé
-- Allez installé
+- Golang installé
 
 ## Configuration du pare-feu
 Cette configuration de pare-feu par défaut exposera:
@@ -54,16 +55,23 @@ Cette configuration de pare-feu par défaut exposera:
 - Prometheus Exporter (28686) 
 - Votre node Galactica.
 
-> :warning: Si `ufw` est déjà installé, veuillez exécuter uniquement ces commandes pour ajouter de nouvelles règles :
 
-> The default 2 digits of the GALACTICA_PORT is `26` (full port: `26656`) 
+### UFW déjà installé
+
+> Les 2 chiffres de départ par défaut du `GALACTICA_PORT` sont `26` (port complet : `26656`)
+
+ Si `ufw`` est déjà installé, veuillez exécuter uniquement ces commandes pour ajouter de nouvelles règles :
 
 ```bash
 sudo ufw allow ${GALACTICA_PORT}656,28686,8888/tcp
 sudo ufw reload
 ```
 
-Installation de `ufw` et de nouvelles règles
+### Nouvelle Installation (UFW pas installé)
+
+> Les 2 chiffres de départ par défaut du `GALACTICA_PORT` sont `26` (port complet : `26656`)
+
+Commande d'installation de `ufw` et de nouvelles règles:
 ```bash
 sudo apt install ufw 
 sudo ufw default allow outgoing 
