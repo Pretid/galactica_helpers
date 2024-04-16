@@ -8,7 +8,7 @@ Configuration:
         - WEBHOOK_URL # L'adresse du webhook généré sur votre channel discord
     - WALLET_FAUCET # Remplacer YOUR_WALLET par le votre 
 
-Placer dans le répertoire de votre choix
+Placer dans le répertoire de votre choix et bien configuration le chemin vers le fichier
     
     - Créer un CRON:
     
