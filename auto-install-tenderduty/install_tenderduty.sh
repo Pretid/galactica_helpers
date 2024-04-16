@@ -16,7 +16,6 @@ cp example-config.yml config.yml
 if [ -z "${GALACTICA_PORT}" ]; then
     echo "Error: GALACTICA_PORT variable is not set. Please set it before running this script."
     read -p "Enter your GALACTICA_PORT: " GALACTICA_PORT
-    exit 1
 fi
 
 # Check if VALOPER_ADDRESS variable is set
@@ -25,7 +24,6 @@ if [ -z "${VALOPER_ADDRESS}" ]; then
     echo "Setting VALOPER_ADDRESS..."
     VALOPER_ADDRESS=$(galacticad keys show $WALLET --bech val -a)
     echo $VALOPER_ADDRESS
-    exit 1
 fi
 # Make a backup of the original file
 cp $HOME/tenderduty/config.yml $HOME/tenderduty/config.yml.bak
