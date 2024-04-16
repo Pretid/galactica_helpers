@@ -32,7 +32,15 @@ Ce script automatise le processus d'installation de [Tenderduty](https://github.
 - Utilisation de Tenderduty sur une machine/instance séparée
 - Configuration automatique du pare-feu
 
+
+
 ## Installation
+
+Pré-Requis:
+- Nœud Galactica installé
+- Golang installé
+---
+
 Utilisez la commande suivante :
 
 ```bash
@@ -45,9 +53,6 @@ chmod +x install_tenderduty.sh
 # Exécution de l'installation
 ./install_tenderduty.sh
 ```
-## Conditions préalables:
-- Nœud Galactica installé
-- Golang installé
 
 ## Configuration du pare-feu
 Cette configuration de pare-feu par défaut exposera:

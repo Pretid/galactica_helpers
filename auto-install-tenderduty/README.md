@@ -31,13 +31,13 @@ This script automates the process of installing [Tenderduty](https://github.com/
 - Using Tenderduty on a separate machine
 - Automatic Firewall Setup
 
-## Pre-requisites:
-- Galactica Node installed
-- Golang installed
-
 
 
 ## Installation
+Pre-requisites:
+- Galactica Node installed
+- Golang installed
+
 Use the following command:
 
 ```bash
