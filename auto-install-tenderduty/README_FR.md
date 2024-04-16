@@ -65,7 +65,7 @@ Cette configuration de pare-feu par défaut exposera:
 
 > Les 2 chiffres de départ par défaut du `GALACTICA_PORT` sont `26` (port complet : `26656`)
 
- Si `ufw`` est déjà installé, veuillez exécuter uniquement ces commandes pour ajouter de nouvelles règles :
+ Si `ufw` est déjà installé, veuillez exécuter uniquement ces commandes pour ajouter de nouvelles règles :
 
 ```bash
 sudo ufw allow ${GALACTICA_PORT}656,28686,8888/tcp
