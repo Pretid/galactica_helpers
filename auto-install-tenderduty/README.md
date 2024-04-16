@@ -8,6 +8,23 @@ Contributors:
 
 This script automates the process of installing [Tenderduty](https://github.com/blockpane/tenderduty) onto your Galactica Node Validator, it will automatically pre-configure Tenderduty to monitor your local Galatica Node instance as well as input the Chain information.
 
+[Tenderduty](https://github.com/blockpane/tenderduty/blob/main/docs/README.md) is a tool for validators running tendermint nodes. It sends notifications when it detects problems.
+
+- Monitors a validator's performance across multiple chains:
+    - Checks for missed blocks based on consecutive misses or percentage missed within the slashing window.
+    - Alerts for being jailed, tombstoned, or inactive.
+    - Customizable alert destinations for each chain.
+- Monitors node health:
+    - Optional alerts for syncing issues or unresponsiveness.
+    - Configurable threshold for alerting on downtime.
+    - Fallback to public RPC nodes if all nodes are down.
+    - Provides a Prometheus exporter for integration with other visualization systems.
+    - Sends alerts to Pagerduty, Discord, or Telegram.
+- Includes a dashboard for displaying status.
+
+
+![Tenderduty Dashboard](./images/Tenderduty%20Dashboard.png)
+
 ## Work in Progress:
 - Configuring Discord/Telegram/Slack notifications
 - Using Tenderduty on a separate machine
