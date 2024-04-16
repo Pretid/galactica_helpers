@@ -89,4 +89,4 @@ sudo systemctl start tenderdutyd
 sudo systemctl restart tenderdutyd
 
 echo "Tenderduty installation complete..."
-echo "Your Tenderduty instance is running on $(hostname -I):8888"
+echo "Your Tenderduty instance is running on $(hostname -I | awk '{print $1}'):8888"
