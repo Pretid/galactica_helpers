@@ -32,8 +32,8 @@ cp $HOME/tenderduty/config.yml $HOME/tenderduty/config.yml.bak
 
 # Galactica Configuration
 echo "Configuring Tenderduty..."
-sed -i.bak 's|Osmosis|Galactica|g' $HOME/tenderduty/config.yml
-sed -i.bak 's|osmosis-1|galactica_9302-1|g' $HOME/tenderduty/config.yml
+sed -i.bak "s|Osmosis|Galactica|g" $HOME/tenderduty/config.yml
+sed -i.bak "s|osmosis-1|galactica_9302-1|g" $HOME/tenderduty/config.yml
 sed -i.bak "s|tcp://localhost:26657|tcp://localhost:${GALACTICA_PORT}657|g" $HOME/tenderduty/config.yml
 sed -i.bak "s|osmovaloper1xxxxxxx...|$VALOPER_ADDRESS|g" $HOME/tenderduty/config.yml
 echo "Tenderduty Galactica configuration complete..."
@@ -45,9 +45,9 @@ line_to_remove="- url: https://some-other-node:443"
 next_line_to_remove="  alert_if_down: no"
 
 # Remove the last entry from config.yml
-sed -i.bak 's|$comment_to_remove.*$||' $HOME/tenderduty/config.yml
-sed -i.bak 's|$line_to_remove.*$||' $HOME/tenderduty/config.yml
-sed -i.bak 's|$next_line_to_remove.*$||' $HOME/tenderduty/config.yml
+sed -i.bak "s|$comment_to_remove.*$||" $HOME/tenderduty/config.yml
+sed -i.bak "s|$line_to_remove.*$||" $HOME/tenderduty/config.yml
+sed -i.bak "s|$next_line_to_remove.*$||" $HOME/tenderduty/config.yml
 
 
 # Set tenderduty as a service
