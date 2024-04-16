@@ -3,6 +3,8 @@
 sudo apt update && sudo apt upgrade -y
 sudo apt install curl build-essential git wget jq make gcc tmux pkg-config libssl-dev libleveldb-dev tar -y
 
+source ~/.bash_profile 
+
 # Install Tenderduty
 cd $HOME
 rm -rf tenderduty
@@ -14,7 +16,7 @@ cp example-config.yml config.yml
 # Configuration
 # Check if GALACTICA_PORT variable is set
 if [ -z "${GALACTICA_PORT}" ]; then
-    echo "Error: GALACTICA_PORT variable is not set. Please set it before running this script."
+    echo "Error: GALACTICA_PORT variable is not set."
     read -p "Enter your GALACTICA_PORT: " GALACTICA_PORT
 fi
 
@@ -41,9 +43,9 @@ echo "Tenderduty Galactica configuration complete..."
 comment_to_remove="# repeat hosts for monitoring redundancy"
 line_to_remove="- url: https://some-other-node:443"
 next_line_to_remove="  alert_if_down: no"
-sed -i.bak 's|${comment_to_remove}|g' $HOME/tenderduty/config.yml
-sed -i.bak 's|${line_to_remove}|g' $HOME/tenderduty/config.yml
-sed -i.bak 's|${next_line_to_remove}|g' $HOME/tenderduty/config.yml
+sed -i.bak 's|${comment_to_remove}||g' $HOME/tenderduty/config.yml
+sed -i.bak 's|${line_to_remove}||g' $HOME/tenderduty/config.yml
+sed -i.bak 's|${next_line_to_remove}||g' $HOME/tenderduty/config.yml
 
 
 # Set tenderduty as a service
