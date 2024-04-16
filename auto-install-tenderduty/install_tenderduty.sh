@@ -17,7 +17,7 @@ cp example-config.yml config.yml
 # Check if GALACTICA_PORT variable is set
 if [ -z "${GALACTICA_PORT}" ]; then
     echo "Error: GALACTICA_PORT variable is not set."
-    read -p "Enter your GALACTICA_PORT: " GALACTICA_PORT
+    read -p "Enter the first digits of (Default 26)your GALACTICA_PORT: " GALACTICA_PORT
 fi
 
 # Check if VALOPER_ADDRESS variable is set
@@ -87,3 +87,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable tenderdutyd
 sudo systemctl start tenderdutyd
 sudo systemctl restart tenderdutyd
+
+echo "Tenderduty installation complete..."
+echo "Your Tenderduty instance is running on $(hostname -I):8888"
