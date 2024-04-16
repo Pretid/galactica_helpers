@@ -8,8 +8,9 @@ Configuration:
     - WALLET_FAUCET="YOUR_WALLET" # Remplacer YOUR_WALLET par le votre 
 
 Placer dans le répertoire de votre choix
-    -Créer un CRON
-        - Exemple toutes les 5 minutes: 
+    -Créer un CRON:
+    
+        - Exemple toutes les 5 minutes
         `#*/5 * * * *  /home/Nicolas/faucet/galactica_ubi.sh > /home/Nicolas/faucet_ubi.log 2>&1`
         - Créer un fichier log pour garder une trace des éxécutions.
 
