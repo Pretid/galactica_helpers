@@ -8,6 +8,7 @@ Configuration:
     - WALLET_FAUCET="YOUR_WALLET" # Remplacer YOUR_WALLET par le votre 
 
 Placer dans le répertoire de votre choix
+    
     -Créer un CRON:
     
         - Exemple toutes les 5 minutes
