@@ -30,10 +30,22 @@ fi
 # Make a backup of the original file
 cp $HOME/tenderduty/config.yml $HOME/tenderduty/config.yml.bak
 
+# Galactica Configuration
+echo "Configuring Tenderduty..."
 sed -i.bak 's|Osmosis|Galactica|g' $HOME/tenderduty/config.yml
 sed -i.bak 's|osmosis-1|galactica_9302-1|g' $HOME/tenderduty/config.yml
 sed -i.bak "s|tcp://localhost:26657|tcp://localhost:${GALACTICA_PORT}657|g" $HOME/tenderduty/config.yml
 sed -i.bak "s|osmovaloper1xxxxxxx...|$VALOPER_ADDRESS|g" $HOME/tenderduty/config.yml
+echo "Tenderduty Galactica configuration complete..."
+
+
+# Remove unused lines
+comment_to_remove="# repeat hosts for monitoring redundancy"
+line_to_remove="- url: https://some-other-node:443"
+next_line_to_remove="  alert_if_down: no"
+sed -i.bak 's|${comment_to_remove}|g' $HOME/tenderduty/config.yml
+sed -i.bak 's|${line_to_remove}|g' $HOME/tenderduty/config.yml
+sed -i.bak 's|${next_line_to_remove}|g' $HOME/tenderduty/config.yml
 
 
 # Set tenderduty as a service
