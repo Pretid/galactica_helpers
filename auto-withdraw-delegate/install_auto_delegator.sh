@@ -34,7 +34,7 @@ read GN_TG_CHAT_ID
 
 echo "Enter your PASSPHRASE : "
 read PASSPHRASE
-
+#hardcoding this but you can change it in bash file
 GN_URL_EXPLORER="https://testnet.itrocket.net/galactica/tx/"
 
 # Display the values
