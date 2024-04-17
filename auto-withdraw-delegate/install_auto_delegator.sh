@@ -17,13 +17,13 @@ echo " '----------------'  '----------------'  '----------------'  '------------
 BASHRC="$HOME/.bash_profile"
 
 # Prompt for each variable and append to bashrc
-echo "Please enter the value for GN_DISCORD_NOTIF (true or false):"
+echo "Please enter the value for GN_DISCORD_NOTIF activate or not discord notification (true or false):"
 read GN_DISCORD_NOTIF
 
 echo "Please enter the value for GN_DISCORD_WEBHOOK:"
 read GN_DISCORD_WEBHOOK
 
-echo "Please enter the value for GN_TG_NOTIF(true or false):"
+echo "Please enter the value for GN_TG_NOTIF activate or not telegram notification(true or false):"
 read GN_TG_NOTIF
 
 echo "Please enter the value for GN_TG_BOT_TOKEN:"
