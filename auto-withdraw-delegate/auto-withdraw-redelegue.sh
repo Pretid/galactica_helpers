@@ -60,7 +60,7 @@ fi
 # let a little bit for fee or whatever
 AMOUNT=$(($AMOUNT / 1000 * 1000))
 #forcing amount here for test
-AMOUNT=100000
+#AMOUNT=100000
 output_hash2=$(echo -e "$PASSPHRASE\n$PASSPHRASE" | galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y | grep -oP 'txhash: \K\S+')
 echo "Delegation done"
 
