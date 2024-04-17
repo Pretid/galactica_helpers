@@ -1,102 +1,89 @@
 #!/bin/bash
 
-source ~/.bash_profile
+cd $HOME
+source ~/.bashrc
+source $HOME/.bash_profile
 
 
-DISCORD=false # changer par true s'il faut utiliser la fonction
-TG=false # changer par true s'il faut utiliser la fonction
-
-URL_EXPLORER="https://testnet.itrocket.net/galactica/tx/"
-CHAIN_ID="galactica_9302-1"
-
-
-#Discord WEBHOOK URL
-WEBHOOK_URL="METTRE L URL DE VOTRE WEBHOOK" # /!\ A config /!\
-send_discord_message() {
-    local webhook_url="$1"
-    local message="$2"
-    curl -X POST \
-        -H "Content-Type: application/json" \
-        --data "{\"content\":\"$message\"}" \
-        "$webhook_url"
-}
+#helper functions
 
 send_telegram_message() {
-    local bot_token="votretoken" # /!\ A config /!\
-    local chat_id="votre id" # /!\ A config /!\
-    local message="$1"
-
-    curl -s -X POST "https://api.telegram.org/bot$bot_token/sendMessage" -d "chat_id=$chat_id&text=$message" > /dev/null
+    if [ "$GN_TG_NOTIF" = true ]; then
+        local message="$1"
+        curl -s -X POST "https://api.telegram.org/bot$GN_TG_BOT_TOKEN/sendMessage" -d "chat_id=$GN_TG_CHAT_ID&text=$message" > /dev/null
+    fi
 }
-#===================================================================#
-#On récupère la balance
-BALANCE=$(galacticad query bank balances $WALLET_ADDRESS | awk '/amount/{print substr($3, 2, length($3)-2)}')
-#===================================================================#
 
+notify() {
+    echo "$1"
+    send_telegram_message "$1"
+    send_discord_message "$1"
+}
 
-#===================================================================#
-                        #WITHDRAW
-echo "On withdraw"
-output_hash1=$(echo -e "$PASSPHRASE\n$PASSPHRASE" | galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y | grep -oP 'txhash: \K\S+')
-txhash1=$output_hash1
-echo "txhash1: $txhash1"
+send_discord_message() {
+    if [ "$GN_DISCORD_NOTIF" = true ]; then
+     local message="$1"
+      curl -X POST \
+        -H "Content-Type: application/json" \
+        --data "{\"content\":\"$message\"}" \
+        "$GN_DISCORD_WEBHOOK"
+    fi
+}
 
-if [ "$DISCORD" = true ]; then
-#Discord Notification
-send_discord_message "$WEBHOOK_URL" "Withdrawal tx: $URL_EXPLORER$txhash1"
-elif [ "$TG" = true ]; then
-#Telegram Notification
-send_telegram_message "$WEBHOOK_URL" "Withdrawal tx: $URL_EXPLORER$txhash1"
+#main program here
+
+echo "Withdraw rewards and commissions"
+{
+echo "$PASSPHRASE"
+echo "$PASSPHRASE"
+} |
+galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y
+
+sleep 5
+
+export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk '/amount/{print substr($3, 2, length($3)-2)}')
+
+# Ensure AMOUNT is not empty and is numeric using regex
+if [ -z "$AMOUNT" ] || ! echo "$AMOUNT" | grep -qE '^[0-9]+$'; then
+    echo "Invalid or empty AMOUNT: $AMOUNT"
+    notify "Invalid or empty AMOUNT: $AMOUNT"
+    exit 1
 fi
-#===================================================================#
 
-sleep 3
+# Use bc to handle large numbers for comparison
+if [ ${#AMOUNT} -le 9 ]; then
+    echo "Not enough for delegation : $AMOUNT"
+    notify "Not enough for delegation : $AMOUNT"
+    exit 1
+fi
 
-#===================================================================#
-                        #DELEGATE
-# Sometimes, the amount of the balance is lower than the delegate value.
-# so, we want to reduce the amount to delegate
-# Check the balance, and  if the amount is greater than 1 GNET, delegate 1 GNET less than Wallet amount, else, delegate zero.
-
-echo "Delegate"
-
-LENGTH=${#BALANCE}
-echo "Lenght : $LENGTH" 
-
-if [ ${#BALANCE} -gt 10 ]; then
-    # Get the length of BALANCE
-    LENGTH=${#BALANCE}
-    echo "Lenght : $LENGTH" 
-
-    # Calculate the index of the 10th and 9th characters from the right
-    INDEX=$((LENGTH - 9))
-    echo "Index : $INDEX"
-    # Replace the characters at the calculated index with zeros
-    AMOUNT="${BALANCE:0:INDEX-1}00${BALANCE:INDEX+1}"
-
-    echo "AMOUNT: $AMOUNT"
-
-
-
+# let a little bit for fee or whatever
+AMOUNT=$(($AMOUNT / 1000 * 1000))
+#forcing amount here for test
+AMOUNT=100000
 output_hash2=$(echo -e "$PASSPHRASE\n$PASSPHRASE" | galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y | grep -oP 'txhash: \K\S+')
-txhash2=$output_hash2
-echo "txhash2: $txhash2"
-sleep 1
-    if [ "$DISCORD" = true ]; then
-        # Notification Discord
-        send_discord_message "$WEBHOOK_URL" "Delegate tx: $URL_EXPLORER$txhash2"
-    elif [ "$TG" = true ]; then
-        # Notification Telegram
-        send_telegram_message "$WEBHOOK_URL" "Delegate tx: $URL_EXPLORER$txhash2"
+echo "Delegation done"
+
+attempts=3
+
+for ((i=1; i<=attempts; i++))
+do
+    echo "Attempt $i of $attempts..."
+
+    # Query the transaction and extract the "code" value
+    code_value=$(galacticad query tx $output_hash2 | grep "code:" | awk '{print $2}')
+
+    # Check if the code value was successfully retrieved and is equal to 0
+    if [ "$code_value" -eq 0 ]; then
+        notify "Delegation successful, amount $AMOUNT. Transaction $GN_URL_EXPLORER$output_hash2"
+        exit 0
+    elif [ "$code_value" -eq 5 ]; then
+        echo "Delegation not working, please check transaction $GN_URL_EXPLORER$output_hash2"
+        notify "Delegation not working, please check transaction $GN_URL_EXPLORER$output_hash2"
+        exit 0
     fi
 
-else
-        # Discord Notification
-        if [ "$DISCORD" = true ]; then
-            send_discord_message "$WEBHOOK_URL" "Balance insuffisante $AMOUNT"
-
-        # Telegram Notification
-        elif [ "$TG" = true ]; then
-             send_telegram_message "Balance insuffisante $AMOUNT"            
-        fi
-fi
+    # Wait for 10 seconds before the next attempt
+    sleep 10
+done
+notify "Cannot retrieve transaction, please check transaction $GN_URL_EXPLORER$output_hash2"
