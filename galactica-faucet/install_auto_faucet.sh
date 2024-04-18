@@ -16,7 +16,7 @@ if [[ $answer == "y" || $answer == "yes" ]]; then
     chmod +x galactica_ubi.sh
 
 
-    cron_job="*/5 * * * * $HOME/galactica_ubi.sh >> $HOME/galactica_ubi.log 2>&1"
+    cron_job="0 * * * * $HOME/galactica_ubi.sh >> $HOME/galactica_ubi.log 2>&1"
     (crontab -l ; echo "$cron_job") | crontab -
 
     echo "Cron task create and will be executed every 5 minutes."
