@@ -36,7 +36,6 @@ This script automates the process of installing [Tenderduty](https://github.com/
 ## Installation
 Pre-requisites:
 - Galactica Node installed
-- Golang installed
 
 Use the following command:
 
