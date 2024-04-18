@@ -1,7 +1,7 @@
 #!/bin/bash
 source <(curl -s https://raw.githubusercontent.com/Pretid/galactica_helpers/main/utils/common.sh)
 
-displayLogo()
+displayLogo
 
 # Path to the bashrc file
 BASHRC="$HOME/.bash_profile"
