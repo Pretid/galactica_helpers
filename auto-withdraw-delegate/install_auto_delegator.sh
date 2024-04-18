@@ -1,57 +1,36 @@
 #!/bin/bash
-apt-get install cron
-# Ask user for phassphrase
-read -sp "Enter your PASSPHRASE : " PASSPHRASE
-echo
+source <(curl -s https://raw.githubusercontent.com/Pretid/galactica_helpers/main/utils/common.sh)
 
-# save Passphrase in .bashrc
-echo "export PASSPHRASE=\"$PASSPHRASE\"" >> "$HOME/.bashrc"
-source $HOME/.bashrc
+initScript
 
-# Contenu du script à créer
-script_content='#!/bin/bash
+# Ask for confirmation
+echo "Are all values correct? (y/n)"
+read answer
 
-cd $HOME
-source ~/.bashrc
-source ~/.bash_profile
+# Check the response
+if [[ $answer == "y" || $answer == "yes" ]]; then
 
-echo "On withdraw"
-{
-echo "$PASSPHRASE"
-echo "$PASSPHRASE"
-} |
-galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id galactica_9302-1 --gas 200000 --gas-prices 10agnet -y
-sleep 5
+    echo "Retrieve and install auto-withdraw-redelegue"
+
+    wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-withdraw-delegate/auto-withdraw-redelegue.sh"
+    chmod +x auto-withdraw-redelegue.sh
 
 
-export AMOUNT=$(galacticad query bank balances $WALLET_ADDRESS | awk '\''/amount/{print substr($3, 2, length($3)-2)}'\'')
+    cron_job="0 * * * * $HOME/auto-withdraw-redelegue.sh >> $HOME/auto-withdraw-redelegue.log 2>&1"
+    (crontab -l ; echo "$cron_job") | crontab -
 
-echo "Delegate"
-{
-echo "$PASSPHRASE"
-echo "$PASSPHRASE"
-} |
-galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id galactica_9302-1 --gas 200000 --gas-prices 10agnet -y'
+    echo "Cron task create and will be executed every hour"
 
-file_path="$HOME/auto-withdraw-redelegue.sh"
+    if [ -f "install_auto_delegator.sh" ]; then
+        echo "File install_auto_delegator.sh exists. Removing it..."
+        rm install_auto_delegator.sh
+        echo "File install_auto_delegator.sh removed successfully."
+    else
+        echo "File install_auto_delegator.sh does not exist."
+    fi
 
-echo "$script_content" > "$file_path"
-
-chmod +x "$file_path"
-
-echo "Script file created with success"
-
-cron_job="0 * * * * $HOME/auto-withdraw-redelegue.sh >> $HOME/auto-withdraw-redelegue.log 2>&1"
-
-# Add cron task
-(crontab -l ; echo "$cron_job") | crontab -
-
-echo "Cron task create and will be executed every hour"
-
-if [ -f "install_auto_delegator.sh" ]; then
-    echo "File install_auto_delegator.sh exists. Removing it..."
-    rm install_auto_delegator.sh
-    echo "File install_auto_delegator.sh removed successfully."
 else
-    echo "File install_auto_delegator.sh does not exist."
+    echo "Operation aborted. Please restart the script and enter correct values. You can run init_config.sh from repository"
+    exit 1
 fi
+
