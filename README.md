@@ -18,6 +18,22 @@ chmod +x init_config.sh
 ```
 This will set all the variables we need for the others scripts.
 
+### Which variables must be set to run all the scripts ? 
+Here are all the variables that should be set for running all the scripts. 
+Your bashrc or bash_profile file should have theses variables.
+```bash
+export GN_URL_EXPLORER="https://testnet.itrocket.net/galactica/tx/"
+export GN_DISCORD_NOTIF="false"
+export GN_DISCORD_WEBHOOK="webhookurlfordiscord"
+export GN_TG_NOTIF="true"
+export GN_TG_BOT_TOKEN="your telegram token"
+export GN_TG_CHAT_ID="your telegram chat"
+export GN_URL_EXPLORER="https://testnet.itrocket.net/galactica/tx/"
+export PASSPHRASE="your passphrase"
+export GN_ETH_WALLET_ADDRESS="your 0x wallet address to get from the faucet"
+```
+And of course the one of the ITRocket scripts.
+
 ## Scripts
 
 - [Auto Withdraw and Delegate](./auto-withdraw-delegate/)
