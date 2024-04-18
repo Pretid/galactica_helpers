@@ -1,34 +1,7 @@
 #!/bin/bash
+source <(curl -s https://raw.githubusercontent.com/Pretid/galactica_helpers/main/utils/common.sh)
 
-cd $HOME
-source ~/.bashrc
-source $HOME/.bash_profile
-
-
-#helper functions
-
-send_telegram_message() {
-    if [ "$GN_TG_NOTIF" = true ]; then
-        local message="$1"
-        curl -s -X POST "https://api.telegram.org/bot$GN_TG_BOT_TOKEN/sendMessage" -d "chat_id=$GN_TG_CHAT_ID&text=$message" > /dev/null
-    fi
-}
-
-notify() {
-    echo "$1"
-    send_telegram_message "$1"
-    send_discord_message "$1"
-}
-
-send_discord_message() {
-    if [ "$GN_DISCORD_NOTIF" = true ]; then
-     local message="$1"
-      curl -X POST \
-        -H "Content-Type: application/json" \
-        --data "{\"content\":\"$message\"}" \
-        "$GN_DISCORD_WEBHOOK"
-    fi
-}
+initScript
 
 #main program here
 

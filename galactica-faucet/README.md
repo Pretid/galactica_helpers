@@ -1,20 +1,28 @@
 # Galactica Faucet
 >⚠️ **Community Repository**: Please note that the scripts in this repository are contributed by members of the Galactica community and may not be officially endorsed or supported by the Galactica development team. While efforts are made to ensure the quality and security of the scripts, users should exercise caution and review the code before running it in their node validators.
 
-Configuration:
+## Configuration:
    
-    - Pour l'utilisation d'un WEBHOOK pour DISCORD : 
-        - DISCORD=false # true pour l'utiliser
-        - WEBHOOK_URL # L'adresse du webhook généré sur votre channel discord
-    - WALLET_FAUCET # Remplacer YOUR_WALLET par le votre 
+>⚠️ You've to run the init_config.sh file before running this scripts. 
 
-Placer dans le répertoire de votre choix et bien configuration le chemin vers le fichier
-    
-    - Créer un CRON:
-    
-        - Exemple toutes les 5 minutes
-        */5 * * * *  /home/Nicolas/faucet/galactica_ubi.sh > /home/Nicolas/faucet_ubi.log 2>&1
-        - Créer un fichier log pour garder une trace des éxécutions.
+
+## Installation
+Use the following command:
+
+```bash
+# Download script
+wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/galactica-faucet/install_auto_faucet.sh"
+
+# Add execute permissions
+chmod +x install_auto_faucet.sh
+
+# Execute installation
+./install_auto_faucet.sh
+```
+
+## Log
+A log file is created to check the result, name is galactica_ubi.log
+ 
 
 ## License
 
