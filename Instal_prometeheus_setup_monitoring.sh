@@ -36,14 +36,14 @@ sudo echo "
   - job_name: \"$VALIDATOR_NAME hardware-metrics\"
     # validator ip and port
     static_configs:
-      - targets: [\"$VALIDATOR_IP:9100\"]">> /etc/prometheus/prometheus.yml
+      - targets: [\"$VALIDATOR_IP:9100\"]">> /root/prometheus/prometheus.yml
 
 sudo echo "
 # Validator Host Hardware Metrics
   - job_name: \"$VALIDATOR_NAME validator-metrics\"
     # validator ip and port
     static_configs:
-      - targets: [\"$VALIDATOR_IP:26660\"]">> /etc/prometheus/prometheus.yml
+      - targets: [\"$VALIDATOR_IP:26660\"]">> /root/prometheus/prometheus.yml
 
 # Create Prometheus service
 sudo tee /etc/systemd/system/prometheus.service > /dev/null <<EOF
