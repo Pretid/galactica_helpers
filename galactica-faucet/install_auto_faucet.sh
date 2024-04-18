@@ -19,7 +19,7 @@ if [[ $answer == "y" || $answer == "yes" ]]; then
     cron_job="0 * * * * $HOME/galactica_ubi.sh >> $HOME/galactica_ubi.log 2>&1"
     (crontab -l ; echo "$cron_job") | crontab -
 
-    echo "Cron task create and will be executed every 5 minutes."
+    echo "Cron task create and will be executed every hours."
 
     if [ -f "install_auto_faucet.sh" ]; then
         echo "File install_auto_faucet.sh exists. Removing it..."
