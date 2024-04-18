@@ -55,7 +55,7 @@ User=$USER
 TimeoutStartSec=0
 CPUWeight=95
 IOWeight=95
-ExecStart=prometheus --config.file=$HOME/prometheus/prometheus.yml --web.config.file=$HOME/prometheus/web.yml --storage.tsdb.path=$HOME/prometheus/data
+ExecStart=prometheus --config.file=$HOME/prometheus/prometheus.yml
 Restart=always
 RestartSec=2
 LimitNOFILE=800000
