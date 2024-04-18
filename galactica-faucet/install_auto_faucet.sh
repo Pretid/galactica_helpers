@@ -23,7 +23,7 @@ if [[ $answer == "y" || $answer == "yes" ]]; then
 
     if [ -f "install_auto_faucet.sh" ]; then
         echo "File install_auto_faucet.sh exists. Removing it..."
-        rm install_auto_delegator.sh
+        rm install_auto_faucet.sh
         echo "File install_auto_faucet.sh removed successfully."
     else
         echo "File install_auto_faucet.sh does not exist."
