@@ -1,24 +1,14 @@
 #!/bin/bash
 
-echo " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------.";
-echo "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |";
-echo "| |     ______   | || |  _______     | || |      __      | || | ____    ____ | || |   ______     | || |     ____     | || | ____  _____  | |";
-echo "| |   .' ___  |  | || | |_   __ \    | || |     /  \     | || ||_   \  /   _|| || |  |_   __ \   | || |   .'    \`.   | || ||_   \|_   _| | |";
-echo "| |  / .'   \_|  | || |   | |__) |   | || |    / /\ \    | || |  |   \/   |  | || |    | |__) |  | || |  /  .--.  \  | || |  |   \ | |   | |";
-echo "| |  | |         | || |   |  __ /    | || |   / ____ \   | || |  | |\  /| |  | || |    |  ___/   | || |  | |    | |  | || |  | |\ \| |   | |";
-echo "| |  \ \`.___.'\  | || |  _| |  \ \_  | || | _/ /    \ \_ | || | _| |_\/_| |_ | || |   _| |_      | || |  \  \`--'  /  | || | _| |_\   |_  | |";
-echo "| |   \`._____.'  | || | |____| |___| | || ||____|  |____|| || ||_____||_____|| || |  |_____|     | || |   \`.____.'   | || ||_____|\____| | |";
-echo "| |              | || |              | || |              | || |              | || |              | || |              | || |              | |";
-echo "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |";
-echo " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' ";
-
+source <(curl -s https://raw.githubusercontent.com/Pretid/galactica_helpers/main/utils/common.sh)
+displayLogo
 
 # Prompt user for input
 read -p "Enter the version of node exporter (Current is 1.7.0): " VER
-read -p "Enter the username you're logged to run the service: " USER
+read -p "Enter the username you're logged to run the service (root): " USER
 read -p "Enter the monitor IP : " MONITOR_IP
 read -p "Enter the validator IP : " VALIDATOR_IP
-read -p "Enter the Galactica service name : " GALACTICA_SERVICE_NAME
+read -p "Enter the Galactica service name (if installing with itrockets, galacticad.service) : " GALACTICA_SERVICE_NAME
 
 # install node exporter
 cd $HOME || exit
@@ -53,10 +43,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable node-exporter.service
 sudo systemctl start node-exporter.service
 
-# display if it's working or not (CTRL-C to exit)
-sudo journalctl -u node-exporter.service -f --output cat
-
-# show the result querying the metrics
 curl http://localhost:9100/metrics
 
 sudo ufw allow from $MONITOR_IP to $VALIDATOR_IP port 9100
@@ -65,5 +51,6 @@ sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.galactica/config/conf
 sed -i -e 's/namespace = "cometbft"/namespace = "tendermint"/' $HOME/.galactica/config/config.toml
 sudo systemctl daemon-reload
 sudo systemctl restart $GALACTICA_SERVICE_NAME
-curl http://localhost:26660/metrics
 sudo ufw allow from $MONITOR_IP to $VALIDATOR_IP port 26660
+curl http://localhost:26660/metrics
+
