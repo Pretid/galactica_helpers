@@ -65,6 +65,6 @@ do
     fi
 
     # Wait for 10 seconds before the next attempt
-    sleep 10
+    sleep 30
 done
 notify "Cannot retrieve transaction, please check transaction $GN_URL_EXPLORER$output_hash2"
