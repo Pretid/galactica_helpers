@@ -38,7 +38,7 @@ if [ "$len" -le 3 ]; then
     exit 0
 else
     # Keep all but the last three digits, effectively truncating to thousands
-    AMOUNT=${AMOUNT:0:$len-3}000
+    AMOUNT=${AMOUNT:0:$len-9}000000000
 fi
 #forcing amount here for test
 #AMOUNT=100000
