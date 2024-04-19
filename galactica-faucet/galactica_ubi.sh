@@ -2,7 +2,7 @@
 source <(curl -s https://raw.githubusercontent.com/Pretid/galactica_helpers/main/utils/common.sh)
 
 cd $HOME
-initScript
+loadConfig
 
 #===================================================================#
 WALLET_FAUCET=(
