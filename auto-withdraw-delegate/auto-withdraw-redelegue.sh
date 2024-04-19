@@ -10,7 +10,7 @@ echo "Withdraw rewards and commissions"
 echo "$PASSPHRASE"
 echo "$PASSPHRASE"
 } |
-galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y
+galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id $GALACTICA_CHAIN_ID --gas 200000 --gas-prices 10agnet -y
 
 sleep 5
 
