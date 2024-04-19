@@ -31,9 +31,15 @@ if [ ${#AMOUNT} -le 9 ]; then
 fi
 
 # let a little bit for fee or whatever
-echo $AMOUNT
-AMOUNT=$(($AMOUNT / 1000 * 1000))
-echo $AMOUNT
+len=${#AMOUNT}
+if [ "$len" -le 3 ]; then
+    AMOUNT=0
+    notify "Amount to small"
+    exit 0
+else
+    # Keep all but the last three digits, effectively truncating to thousands
+    AMOUNT=${AMOUNT:0:$len-3}000
+fi
 #forcing amount here for test
 #AMOUNT=100000
 output_hash2=$(echo -e "$PASSPHRASE\n$PASSPHRASE" | galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id $GALACTICA_CHAIN_ID --gas 200000 --gas-prices 10agnet -y | grep -oP 'txhash: \K\S+')
