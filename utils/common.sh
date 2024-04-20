@@ -46,14 +46,14 @@ function displayLogo {
 
 function displayConfig {
     echo "You have entered the following values:"
-    echo "GN_DISCORD_NOTIF: $GN_DISCORD_NOTIF"
-    echo "GN_DISCORD_WEBHOOK: $GN_DISCORD_WEBHOOK"
-    echo "GN_TG_NOTIF: $GN_TG_NOTIF"
-    echo "GN_TG_BOT_TOKEN: $GN_TG_BOT_TOKEN"
-    echo "GN_TG_CHAT_ID: $GN_TG_CHAT_ID"
-    echo "GN_URL_EXPLORER: $GN_URL_EXPLORER"
-    echo "GN_ETH_WALLET_ADDRESS: $GN_ETH_WALLET_ADDRESS"
-    echo "PASSPHRASE: $PASSPHRASE"
+    echo "GN_DISCORD_NOTIF: \"$GN_DISCORD_NOTIF\""
+    echo "GN_DISCORD_WEBHOOK: \"$GN_DISCORD_WEBHOOK\""
+    echo "GN_TG_NOTIF: \"$GN_TG_NOTIF\""
+    echo "GN_TG_BOT_TOKEN: \"$GN_TG_BOT_TOKEN\""
+    echo "GN_TG_CHAT_ID: \"$GN_TG_CHAT_ID\""
+    echo "GN_URL_EXPLORER: \"$GN_URL_EXPLORER\""
+    echo "GN_ETH_WALLET_ADDRESS: \"$GN_ETH_WALLET_ADDRESS\""
+    echo "PASSPHRASE: masked"
 }
 
 function initScript {

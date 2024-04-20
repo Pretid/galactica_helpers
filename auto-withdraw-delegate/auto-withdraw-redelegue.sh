@@ -1,7 +1,7 @@
 #!/bin/bash
 source <(curl -s https://raw.githubusercontent.com/Pretid/galactica_helpers/main/utils/common.sh)
 
-initScript
+loadConfig
 
 #main program here
 
@@ -10,7 +10,7 @@ echo "Withdraw rewards and commissions"
 echo "$PASSPHRASE"
 echo "$PASSPHRASE"
 } |
-galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y
+galacticad tx distribution withdraw-rewards $VALOPER_ADDRESS --from $WALLET --commission --chain-id $GALACTICA_CHAIN_ID --gas 200000 --gas-prices 10agnet -y
 
 sleep 5
 
@@ -31,10 +31,18 @@ if [ ${#AMOUNT} -le 9 ]; then
 fi
 
 # let a little bit for fee or whatever
-AMOUNT=$(($AMOUNT / 1000 * 1000))
+len=${#AMOUNT}
+if [ "$len" -le 3 ]; then
+    AMOUNT=0
+    notify "Amount to small"
+    exit 0
+else
+    # Keep all but the last three digits, effectively truncating to thousands
+    AMOUNT=${AMOUNT:0:$len-9}000000000
+fi
 #forcing amount here for test
 #AMOUNT=100000
-output_hash2=$(echo -e "$PASSPHRASE\n$PASSPHRASE" | galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id $CHAIN_ID --gas 200000 --gas-prices 10agnet -y | grep -oP 'txhash: \K\S+')
+output_hash2=$(echo -e "$PASSPHRASE\n$PASSPHRASE" | galacticad tx staking delegate $VALOPER_ADDRESS "$AMOUNT"agnet --from $WALLET --chain-id $GALACTICA_CHAIN_ID --gas 200000 --gas-prices 10agnet -y | grep -oP 'txhash: \K\S+')
 echo "Delegation done"
 
 attempts=3
@@ -57,6 +65,6 @@ do
     fi
 
     # Wait for 10 seconds before the next attempt
-    sleep 10
+    sleep 30
 done
 notify "Cannot retrieve transaction, please check transaction $GN_URL_EXPLORER$output_hash2"

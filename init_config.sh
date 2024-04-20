@@ -52,4 +52,12 @@ if [[ $answer == "y" || $answer == "yes" ]]; then
     echo "export PASSPHRASE=\"$PASSPHRASE\"" >> "$BASHRC"
     echo "All variables set, let's run scripts now ! "
     source $BASHRC
+
 fi
+   if [ -f "init_config.sh" ]; then
+        echo "File init_config.sh exists. Removing it..."
+        rm init_config.sh
+        echo "File init_config.sh removed successfully."
+    else
+        echo "File init_config.sh does not exist."
+    fi
