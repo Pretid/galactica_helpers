@@ -44,6 +44,11 @@ comment_to_remove="# repeat hosts for monitoring redundancy"
 line_to_remove="- url: https://some-other-node:443"
 next_line_to_remove="  alert_if_down: no"
 
+# Configure Telegram alerts if exists
+
+# Configure Discord alerts if exists
+
+
 # Remove the last entry from config.yml
 sed -i.bak "s|$comment_to_remove.*$||" $HOME/tenderduty/config.yml
 sed -i.bak "s|$line_to_remove.*$||" $HOME/tenderduty/config.yml
