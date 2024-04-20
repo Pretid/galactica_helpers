@@ -44,7 +44,7 @@ Utilisez la commande suivante :
 
 ```bash
 # Télécharger le script
-wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/add-auto-tenderduty/auto-install-tenderduty/install_tenderduty.sh"
+wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-install-simple-monitoring-tenderdutyy/install_tenderduty.sh"
 
 # Ajout des autorisations d'exécution
 chmod +x install_tenderduty.sh
@@ -67,7 +67,7 @@ Cette configuration de pare-feu par défaut exposera:
  Si `ufw` est déjà installé, veuillez exécuter uniquement ces commandes pour ajouter de nouvelles règles :
 
 ```bash
-sudo ufw allow ${GALACTICA_PORT}656,28686,8888/tcp
+sudo ufw allow ${GALACTICA_PORT}656,26660,8888/tcp
 sudo ufw reload
 ```
 
@@ -82,6 +82,6 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming 
 sudo ufw allow ssh/tcp 
 sudo ufw limit ssh/tcp 
-sudo ufw allow ${GALACTICA_PORT}656,28686,8888/tcp
+sudo ufw allow ${GALACTICA_PORT}656,26660,8888/tcp
 sudo ufw enable
 ```
