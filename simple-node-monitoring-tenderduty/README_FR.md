@@ -4,8 +4,8 @@
 Contributeurs :
 - [Taro](https://github.com/bobataro)
 
-> :warning: Il n'est pas recommandé d'installer tout votre monitoring sur la même instance que votre validateur de nœud, car cela introduit un point de défaillance unique. Si l'instance tombe en panne ou rencontre des problèmes, votre validateur de nœud et vos services de surveillance pourraient être affectés simultanément, entraînant des temps d'arrêt potentiels et des risques opérationnels. Il est recommandé de répartir votre infrastructure de surveillance sur des instances ou des environnements distincts pour garantir la redondance et améliorer la fiabilité globale du système.
-
+> [!WARNING] 
+> Il n'est pas recommandé d'installer tout votre monitoring sur la même instance que votre validateur de nœud, car cela introduit un point de défaillance unique. Si l'instance tombe en panne ou rencontre des problèmes, votre validateur de nœud et vos services de surveillance pourraient être affectés simultanément, entraînant des temps d'arrêt potentiels et des risques opérationnels. Il est recommandé de répartir votre infrastructure de surveillance sur des instances ou des environnements distincts pour garantir la redondance et améliorer la fiabilité globale du système.
 
 Ce script automatise le processus d'installation de [Tenderduty](https://github.com/blockpane/tenderduty) sur votre Galactica Node Validator, il préconfigurera automatiquement Tenderduty pour surveiller votre instance local du Galactica Node ainsi que saisir les informations de la chaîne.
 
@@ -28,9 +28,9 @@ Ce script automatise le processus d'installation de [Tenderduty](https://github.
 
 ## Travail En cours :
 - Guide de configuration de Tenderduty plus approfondi
-- Configuration des notifications Discord/Telegram/Slack
+- ~~Configuration des notifications Discord/Telegram~~ - **Fait**
 - Utilisation de Tenderduty sur une machine/instance séparée
-- Configuration automatique du pare-feu
+- ~~Configuration automatique du pare-feu~~ - Trop de variables à gérer, la configuration manuelle des règles sur le pare-feu est plus sécurisé.
 
 
 
@@ -52,13 +52,21 @@ chmod +x install_tenderduty.sh
 # Exécution de l'installation
 ./install_tenderduty.sh
 ```
+Une fois ;'installation terminée, vous recevrez un message contenant l'adresse IP et le port nécessaires pour accéder à Tenderduty.
 
+```bash
+"Your Tenderduty instance is running on <YOUR-IP-ADDRESS>:8888"
+```
+Si vous avez des problèmes pour accéder le site, veuillez consulter vos règles de pare-feu ou les configurer comme indiqué ci-dessous.
 ## Configuration du pare-feu
 Cette configuration de pare-feu par défaut exposera:
 - Tenderduty (port 8888)
-- Prometheus Exporter (28686) 
+- Prometheus Exporter (port 26660) 
 - Votre node Galactica.
 
+### Example avec UFW
+>[!NOTE]
+> UFW (pare-feu simple) est un outil de configuration de pare-feu qui s'exécute sur iptables, inclus par défaut dans les distributions Ubuntu. Il fournit une interface simplifiée pour configurer les cas d'utilisation courants du pare-feu via la ligne de commande.
 
 ### UFW déjà installé
 
