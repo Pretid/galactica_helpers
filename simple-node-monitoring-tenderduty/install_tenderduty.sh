@@ -5,6 +5,9 @@ sudo apt install curl build-essential git wget jq make gcc tmux pkg-config libss
 
 source ~/.bash_profile 
 
+# Check if Tenderduty is already installed
+if command -v tenderduty &> /dev/null; then
+    echo "Tenderduty is already installed. Skipping installation."
 # Install Tenderduty
 cd $HOME
 rm -rf tenderduty
@@ -12,6 +15,7 @@ git clone https://github.com/blockpane/tenderduty
 cd tenderduty
 go install
 cp example-config.yml config.yml
+fi
 
 # Configuration
 # Check if GALACTICA_PORT variable is set
@@ -46,8 +50,20 @@ next_line_to_remove="  alert_if_down: no"
 
 # Configure Telegram alerts if exists
 
-# Configure Discord alerts if exists
+# Check if Discord notifications are enabled and webhook is set
+if [[ "$GN_DISCORD_NOTIF" == "true" && -n "$GN_DISCORD_WEBHOOK" ]]; then
+    # Modify Discord settings
+    sed -i.bak '/^discord:/,/^[[:space:]]*$/ {/enabled:/ s/no/yes/}' config.yml
+    sed -i.bak "s|webhook: https://discord.com/api/webhooks/999999999999999999/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz|webhook: $GN_DISCORD_WEBHOOK|" config.yml
+fi
 
+# Check if Telegram notifications are enabled and bot token and chat ID are set
+if [[ "$GN_TG_NOTIF" == "true" && -n "$GN_TG_BOT_TOKEN" && -n "$GN_TG_CHAT_ID" ]]; then
+    # Modify Telegram settings
+    sed -i.bak '/^telegram:/,/^[[:space:]]*$/ {/enabled:/ s/no/yes/}' config.yml
+    sed -i.bak "s|api_key: \"5555555555:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"|api_key: \"$GN_TG_BOT_TOKEN\"|" config.yml
+    sed -i.bak "s|channel: \"-666666666\"|channel: \"$GN_TG_CHAT_ID\"|" config.yml
+fi
 
 # Remove the last entry from config.yml
 sed -i.bak "s|$comment_to_remove.*$||" $HOME/tenderduty/config.yml
@@ -55,6 +71,10 @@ sed -i.bak "s|$line_to_remove.*$||" $HOME/tenderduty/config.yml
 sed -i.bak "s|$next_line_to_remove.*$||" $HOME/tenderduty/config.yml
 
 
+# Check if tenderdutyd.service exists
+if [ -f /etc/systemd/system/tenderdutyd.service ]; then
+    echo "Tenderduty service is already set up. Skipping."
+else
 # Set tenderduty as a service
 sudo tee /etc/systemd/system/tenderdutyd.service << EOF
 [Unit]
@@ -86,6 +106,7 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 EOF
+fi
 
 # Start Service
 sudo systemctl daemon-reload
