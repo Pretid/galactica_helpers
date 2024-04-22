@@ -45,7 +45,7 @@ Use the following command:
 rm install_tenderduty.sh
 
 # Download script
-wget https://raw.githubusercontent.com/Pretid/galactica_helpers/main/simple-node-monitoring-tenderduty/install_tenderduty.sh
+wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/simple-node-monitoring-tenderduty/install_tenderduty.sh"
 
 # Add execute permissions
 chmod +x install_tenderduty.sh
