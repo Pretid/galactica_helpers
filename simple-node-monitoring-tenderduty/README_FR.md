@@ -43,8 +43,11 @@ Pré-Requis:
 Utilisez la commande suivante :
 
 ```bash
+# Supprime le script précédent
+rm install_tenderduty.sh
+
 # Télécharger le script
-wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/auto-install-simple-monitoring-tenderdutyy/install_tenderduty.sh"
+wget "https://raw.githubusercontent.com/Pretid/galactica_helpers/main/simple-node-monitoring-tenderduty/install_tenderduty.sh"
 
 # Ajout des autorisations d'exécution
 chmod +x install_tenderduty.sh
