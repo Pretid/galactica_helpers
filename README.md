@@ -22,7 +22,6 @@ This will set all the variables we need for the others scripts.
 Here are all the variables that should be set for running all the scripts. 
 Your bashrc or bash_profile file should have theses variables.
 ```bash
-export GN_URL_EXPLORER="https://testnet.itrocket.net/galactica/tx/"
 export GN_DISCORD_NOTIF="false"
 export GN_DISCORD_WEBHOOK="webhookurlfordiscord"
 export GN_TG_NOTIF="true"
