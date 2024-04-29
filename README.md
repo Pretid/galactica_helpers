@@ -36,7 +36,7 @@ And of course the one of the ITRocket scripts.
 ## Scripts
 
 - [Auto Withdraw and Delegate](./auto-withdraw-delegate/)
-- [Auto claim faucet](./galactica-facuet/)
+- [Auto claim faucet](./galactica-faucet/)
 - [Monitoring node](./monitoring-node/)
 
 ## License
