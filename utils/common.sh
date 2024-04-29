@@ -56,6 +56,26 @@ function displayConfig {
     echo "PASSPHRASE: masked"
 }
 
+# Fonction pour diviser ou multiplier un chiffre par 10^18
+convert_to_gnet() {
+    local chiffre=$1
+    local operation=$2
+
+    case $operation in
+        M|m)
+            resultat=$(echo "scale=18; $chiffre * 1000000000000000000" | bc)
+            echo "$resultat"
+            ;;
+        D|d)
+            resultat=$(echo "scale=18; $chiffre / 1000000000000000000" | bc)
+            echo "$resultat"
+            ;;
+        *)
+            echo "Opération invalide. Veuillez choisir M ou D."
+            ;;
+    esac
+}
+
 function initScript {
     displayLogo
     loadConfig
