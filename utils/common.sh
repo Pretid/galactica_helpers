@@ -44,6 +44,13 @@ function displayLogo {
     echo -e "${RED}C${GREEN}R${YELLOW}A${BLUE}M${MAGENTA}P${CYAN}O${WHITE}N${NC}"
 }
 
+function displayTaroLogo {                      
+echo " _____ _____ _____ _____ "
+echo "|_   _|  _  | __  |     |"
+echo "  | | |     |    -|  |  |"
+echo "  |_| |__|__|__|__|_____|"                       
+}
+
 function displayConfig {
     echo "You have entered the following values:"
     echo "GN_DISCORD_NOTIF: \"$GN_DISCORD_NOTIF\""
