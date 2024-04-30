@@ -1,4 +1,23 @@
 #!/bin/bash
+
+# Source common functions
+source utils/common.sh
+
+
+# Function to install Tenderduty
+install_tenderduty() {
+    cd $HOME
+    rm -rf tenderduty
+    git clone https://github.com/blockpane/tenderduty
+    cd tenderduty
+    go install
+}
+
+# Display Taro Logo
+echo "Preparing for installation..."
+displayTaroLogo
+sleep 5
+
 # Update and install packages
 sudo apt update && sudo apt upgrade -y
 sudo apt install curl build-essential git wget jq make gcc tmux pkg-config libssl-dev libleveldb-dev tar -y
@@ -8,14 +27,42 @@ source ~/.bash_profile
 # Check if Tenderduty is already installed
 if command -v tenderduty &> /dev/null; then
     echo "Tenderduty is already installed. Skipping installation."
-# Install Tenderduty
-cd $HOME
-rm -rf tenderduty
-git clone https://github.com/blockpane/tenderduty
-cd tenderduty
-go install
-cp example-config.yml config.yml
+else
+    # Attempt installation
+    echo "Attempting to install Tenderduty..."
+    sleep 2 
+    install_tenderduty
+    
+    # Check if installation was successful
+    if [ $? -eq 0 ]; then
+        echo "Tenderduty installation successful."
+        sleep 1 
+        echo "Copying example configuration file..."
+        cp example-config.yml config.yml
+        echo "Configuration file copied successfully."
+        sleep 1
+    else
+        echo "Tenderduty installation failed. Retrying once..."
+        sleep 2 
+        
+        # Retry installation
+        echo "Retrying installation..."
+        install_tenderduty
+        
+        # Check if retry was successful
+        if [ $? -eq 0 ]; then
+            echo "Tenderduty installation successful after retry."
+            sleep 1
+            echo "Copying example configuration file..."
+            cp example-config.yml config.yml
+            echo "Configuration file copied successfully."
+        else
+            echo "Tenderduty installation failed. Exiting."
+            exit 1
+        fi
+    fi
 fi
+
 
 # Configuration
 # Check if GALACTICA_PORT variable is set
