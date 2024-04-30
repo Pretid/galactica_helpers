@@ -8,9 +8,13 @@ source utils/common.sh
 install_tenderduty() {
     cd $HOME
     rm -rf tenderduty
+    echo "Cloning Tenderduty Git Repository..."
     git clone https://github.com/blockpane/tenderduty
+    sleep 2
     cd tenderduty
+    echo "Installing Tenderduty..."
     go install
+    sleep 2
 }
 
 # Display Taro Logo
