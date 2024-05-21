@@ -11,7 +11,7 @@
             background-color: #f0f0f0;
         }
         .slot-machine {
-            margin: 50px auto;
+            margin: 20px auto;
             width: 300px;
             height: 300px;
             border: 5px solid #ccc;
@@ -69,10 +69,30 @@
             margin-top: 10px;
             font-size: 16px;
         }
+        #pool-prize {
+            margin: 20px auto;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9800;
+            text-shadow: 2px 2px 5px #000;
+        }
+        .shiny {
+            color: gold;
+            animation: shine 2s infinite;
+        }
+        @keyframes shine {
+            0% {
+                text-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 30px gold, 0 0 40px gold, 0 0 50px gold;
+            }
+            100% {
+                text-shadow: 0 0 20px gold, 0 0 30px gold, 0 0 40px gold, 0 0 50px gold, 0 0 60px gold;
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Spin to Win a Prize!</h1>
+    <div id="pool-prize" class="shiny">Pool Prize: Loading...</div>
     <button id="connect-button" onclick="connectWallet()">Connect MetaMask</button>
     <div class="slot-machine">
         <div class="slot" id="slot1">🍒</div>
@@ -97,6 +117,8 @@
         let web3;
         let userAccount;
         const GNETAddress = '0x67A4B50798c190C77d872D9f02C8a860ad1488e7'; // Replace with your GNET token contract address
+        const poolAddress = '0x3847f6194b6E84BF81A3B6DA8Be0b75933cEbef3'; // Replace with the pool address
+        const ownerAddress = '0x3847f6194b6E84BF81A3B6DA8Be0b75933cEbef3'; // Replace with your owner address
 
         async function connectWallet() {
             if (window.ethereum) {
@@ -106,6 +128,7 @@
                     web3 = new Web3(window.ethereum);
                     document.getElementById('connect-button').innerText = 'Connected';
                     document.getElementById('spin-button').disabled = false;
+                    updatePoolPrize();
                 } catch (error) {
                     console.error("User denied account access");
                 }
@@ -114,12 +137,18 @@
             }
         }
 
+        async function updatePoolPrize() {
+            const balance = await web3.eth.getBalance(poolAddress);
+            const balanceInGNET = web3.utils.fromWei(balance, 'ether');
+            document.getElementById('pool-prize').innerText = `Pool Prize: ${balanceInGNET} GNET`;
+        }
+
         async function payAndSpin() {
             if (spinning) return;
             spinning = true;
 
             const amountInEther = '1'; // 1 GNET
-            const recipientAddress = '0x3847f6194b6E84BF81A3B6DA8Be0b75933cEbef3'; // Replace with your recipient address
+            const recipientAddress = poolAddress;
 
             try {
                 const transactionParameters = {
@@ -136,6 +165,7 @@
                 });
 
                 spin();
+                updatePoolPrize();
             } catch (error) {
                 console.error("Transaction failed", error);
                 spinning = false;
@@ -177,20 +207,49 @@
         }
 
         function checkWinner(slot1, slot2, slot3) {
-            const winProbability = 0.01; // 1% chance to win
+            const winProbability = 0.5; // 1% chance to win
             const randomChance = Math.random();
             if (slot1 === slot2 && slot2 === slot3 && randomChance < winProbability) {
                 document.getElementById("winner-modal").style.display = "flex";
             }
         }
 
-        function submitAddress() {
+        async function submitAddress() {
             let address = document.getElementById("wallet-address").value;
             if (address) {
-                alert("Address submitted: " + address);
+                try {
+                    const poolBalance = await web3.eth.getBalance(poolAddress);
+                    const prizeAmount = web3.utils.toWei((0.1 * parseFloat(web3.utils.fromWei(poolBalance, 'ether'))).toString(), 'ether');
+
+                    const transactionParameters = {
+                        to: address,
+                        from: ownerAddress,
+                        value: web3.utils.toHex(prizeAmount),
+                        gas: web3.utils.toHex(21000),
+                        gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
+                    };
+
+                    await ethereum.request({
+                        method: 'eth_sendTransaction',
+                        params: [transactionParameters],
+                    });
+
+                    alert("Prize sent to address: " + address);
+                } catch (error) {
+                    console.error("Transaction failed", error);
+                }
                 document.getElementById("winner-modal").style.display = "none";
             }
         }
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
