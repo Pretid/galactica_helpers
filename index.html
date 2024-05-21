@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spin to Win!</title>
     <style>
         body {
@@ -104,7 +104,7 @@
 <body>
     <h1>Spin to Win a Prize!</h1>
     <div class="description">
-        <p>Welcome to the Spin to Win game! Each spin costs 1 GNET, and you have a chance to win big. If you win, 10% of the prize pool will be sent to your wallet. All spin fees are added to the prize pool, increasing the potential winnings for everyone. Good luck!</p>
+        <p>Welcome to the SPIN to Win game! Each spin costs 1 GNET, and you have a chance to win big. If you win, 10% of the prize pool will be sent to your wallet. All spin fees are added to the prize pool, increasing the potential winnings for everyone. Good luck!</p>
     </div>
     <div id="pool-prize" class="shiny">Pool Prize: Loading...</div>
     <button id="connect-button" onclick="connectWallet()">Connect MetaMask</button>
@@ -132,7 +132,6 @@
         let userAccount;
         const GNETAddress = '0x67A4B50798c190C77d872D9f02C8a860ad1488e7'; // GNET token contract address
         const poolAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Pool address
-        const ownerAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Owner address
 
         async function connectWallet() {
             if (window.ethereum) {
@@ -221,11 +220,10 @@
         }
 
         function checkWinner(slot1, slot2, slot3) {
-            document.getElementById("winner-modal").style.display = "flex";
             const winProbability = 0.01; // 1% chance to win
             const randomChance = Math.random();
             if (slot1 === slot2 && slot2 === slot3 && randomChance < winProbability) {
-               // document.getElementById("winner-modal").style.display = "flex";
+                document.getElementById("winner-modal").style.display = "flex";
             }
         }
 
@@ -236,20 +234,23 @@
                     const poolBalance = await web3.eth.getBalance(poolAddress);
                     const prizeAmount = web3.utils.toWei((0.1 * parseFloat(web3.utils.fromWei(poolBalance, 'ether'))).toString(), 'ether');
 
-                    const transactionParameters = {
-                        to: address,
-                        from: ownerAddress,
-                        value: web3.utils.toHex(prizeAmount),
-                        gas: web3.utils.toHex(21000),
-                        gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
-                    };
-
-                    await ethereum.request({
-                        method: 'eth_sendTransaction',
-                        params: [transactionParameters],
+                    const response = await fetch('http://128.65.199.22:3000/send-prize', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            winnerAddress: address,
+                            amount: web3.utils.fromWei(prizeAmount, 'ether')
+                        })
                     });
 
-                    alert("Prize sent to address: " + address);
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("Prize sent to address: " + address);
+                    } else {
+                        alert("Failed to send prize: " + result.error);
+                    }
                 } catch (error) {
                     console.error("Transaction failed", error);
                 }
