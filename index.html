@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: url('bank.webp') no-repeat center center fixed;
+            background: url('/mnt/data/image.png') no-repeat center center fixed;
             background-size: cover;
             color: white; /* Ensure text is readable on the background */
         }
@@ -60,7 +60,8 @@
             align-items: center;
         }
         .modal-content {
-            background-color: #fff;
+            background-color: #333;
+            color: white;
             padding: 20px;
             border-radius: 10px;
             text-align: left;
@@ -70,12 +71,13 @@
             padding: 10px;
             margin-top: 10px;
             font-size: 16px;
+            color: black;
         }
         #pool-prize {
             margin: 20px auto;
             font-size: 24px;
             font-weight: bold;
-            color: #ff0067;
+            color: #ff9800;
             text-shadow: 2px 2px 5px #000;
         }
         .shiny {
@@ -118,9 +120,9 @@
         let spinning = false;
         let web3;
         let userAccount;
-        const GNETAddress = '0x67A4B50798c190C77d872D9f02C8a860ad1488e7'; // Replace with your GNET token contract address
-        const poolAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Replace with the pool address
-        const ownerAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Replace with your owner address
+        const GNETAddress = '0x67A4B50798c190C77d872D9f02C8a860ad1488e7'; // GNET token contract address
+        const poolAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Pool address
+        const ownerAddress = '0xa8aC3E0C9bBDc94db7738b0EceEe63c8f06Ef132'; // Owner address
 
         async function connectWallet() {
             if (window.ethereum) {
@@ -209,8 +211,12 @@
         }
 
         function checkWinner(slot1, slot2, slot3) {
-            // For testing purposes, always make the user win
-            document.getElementById("winner-modal").style.display = "flex";
+             document.getElementById("winner-modal").style.display = "flex";
+            const winProbability = 0.01; // 1% chance to win
+            const randomChance = Math.random();
+            if (slot1 === slot2 && slot2 === slot3 && randomChance < winProbability) {
+               // document.getElementById("winner-modal").style.display = "flex";
+            }
         }
 
         async function submitAddress() {
