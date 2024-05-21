@@ -228,36 +228,36 @@
             }
         }
 
-        async function submitAddress() {
-            let address = document.getElementById("wallet-address").value;
-            if (address) {
-                try {
-                    const poolBalance = await web3.eth.getBalance(poolAddress);
-                    const prizeAmount = web3.utils.toWei((0.1 * parseFloat(web3.utils.fromWei(poolBalance, 'ether'))).toString(), 'ether');
+       async function submitAddress() {
+    let address = document.getElementById("wallet-address").value;
+    if (address) {
+        try {
+            const response = await fetch('https://128.65.199.22:3000/send-prize', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    clientAddress: address
+                })
+            });
 
-                    const response = await fetch('https://128.65.199.22:3000/send-prize', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            winnerAddress: address,
-                            amount: web3.utils.fromWei(prizeAmount, 'ether')
-                        })
-                    });
-
-                    const result = await response.json();
-                    if (result.success) {
-                        alert("Prize sent to address: " + address);
-                    } else {
-                        alert("Failed to send prize: " + result.error);
-                    }
-                } catch (error) {
-                    console.error("Transaction failed", error);
-                }
-                document.getElementById("winner-modal").style.display = "none";
+            const result = await response.json();
+            if (result.success) {
+                alert("Prize sent to address: " + address);
+            } else {
+                alert("Failed to send prize: " + result.error);
             }
+        } catch (error) {
+            console.error("Transaction failed", error);
+            alert("Transaction failed: " + error.message);
         }
+        document.getElementById("winner-modal").style.display = "none";
+    } else {
+        alert("Please enter a valid wallet address.");
+    }
+}
+
     </script>
 </body>
 </html>
