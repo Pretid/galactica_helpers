@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spin to Win!</title>
     <style>
         body {
@@ -10,7 +9,15 @@
             text-align: center;
             background: url('/mnt/data/image.png') no-repeat center center fixed;
             background-size: cover;
-            color: white; /* Ensure text is readable on the background */
+            color: white;
+        }
+        .description {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
         }
         .slot-machine {
             margin: 20px auto;
@@ -96,6 +103,9 @@
 </head>
 <body>
     <h1>Spin to Win a Prize!</h1>
+    <div class="description">
+        <p>Welcome to the Spin to Win game! Each spin costs 1 GNET, and you have a chance to win big. If you win, 10% of the prize pool will be sent to your wallet. All spin fees are added to the prize pool, increasing the potential winnings for everyone. Good luck!</p>
+    </div>
     <div id="pool-prize" class="shiny">Pool Prize: Loading...</div>
     <button id="connect-button" onclick="connectWallet()">Connect MetaMask</button>
     <div class="slot-machine">
@@ -211,11 +221,10 @@
         }
 
         function checkWinner(slot1, slot2, slot3) {
-             document.getElementById("winner-modal").style.display = "flex";
             const winProbability = 0.01; // 1% chance to win
             const randomChance = Math.random();
             if (slot1 === slot2 && slot2 === slot3 && randomChance < winProbability) {
-               // document.getElementById("winner-modal").style.display = "flex";
+                document.getElementById("winner-modal").style.display = "flex";
             }
         }
 
